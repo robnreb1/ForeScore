@@ -1,9 +1,9 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// 🔒 NEVER commit real keys – use .env.* or EAS Secrets in prod
+// ❗️NEVER put real keys in source control
 const firebaseConfig = {
   apiKey:            process.env.EXPO_PUBLIC_FB_API_KEY,
   authDomain:        'forescoredev.firebaseapp.com',
@@ -13,9 +13,12 @@ const firebaseConfig = {
   appId:             process.env.EXPO_PUBLIC_FB_APP_ID,
 };
 
-const app   = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const auth  = getAuth(app);
-const db    = getFirestore(app);
+const app  = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 👇 This single line switches Firestore to long-polling
+const db   = initializeFirestore(app, { experimentalAutoDetectLongPolling: true });
+
 const store = getStorage(app);
 
 export { app, auth, db, store };
