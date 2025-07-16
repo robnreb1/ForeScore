@@ -1,6 +1,15 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    // 👇 add / confirm these four:
+    "jsx": "react-native",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,          // optional but recommended
+    // quality-of-life:
+    "baseUrl": ".",          // so we can use absolute imports later
+    "paths": {               // optional alias example
+      "@src/*": ["src/*"]
+    }
   }
 }
